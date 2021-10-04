@@ -1,0 +1,528 @@
+
+//Create database
+mysql> create database temp;
+Query OK, 1 row affected (0.27 sec)
+
+//databases in system
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| temp               |
++--------------------+
+5 rows in set (0.02 sec)
+
+//create college database
+mysql> CREATE DATABASE College;
+Query OK, 1 row affected (0.23 sec)
+
+//check
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| College            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| temp               |
++--------------------+
+6 rows in set (0.00 sec)
+
+//change current database to college
+mysql> USE College;
+Database changed
+
+//create table teachers
+mysql> CREATE TABLE Teachers (
+    -> teacher_id int(10),
+    -> name varchar(100),
+    -> subject varchar(50),
+    -> salary int(10),
+    -> PRIMARY KEY(teacher_id));
+Query OK, 0 rows affected, 2 warnings (1.88 sec)
+
+
+mysql> DESCRIBE Teachers;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| teacher_id | int(10)      | NO   | PRI | NULL    |       |
+| name       | varchar(100) | YES  |     | NULL    |       |
+| subject    | varchar(50)  | YES  |     | NULL    |       |
+| salary     | int(10)      | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.27 sec)
+
+mysql> ALTER TABLE Teachers
+    -> MODIFY COLUMN name varchar(150) NOT NULL;
+Query OK, 0 rows affected (8.46 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESCRIBE Teachers;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| teacher_id | int(10)      | NO   | PRI | NULL    |       |
+| name       | varchar(150) | NO   |     | NULL    |       |
+| subject    | varchar(50)  | YES  |     | NULL    |       |
+| salary     | int(10)      | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Teachers MODIFY COLUMN subject varchar(50) NOT NULL;
+Query OK, 0 rows affected (4.65 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Teachers MODIFY COLUMN salary int(10)  NOT NULL;
+Query OK, 0 rows affected, 1 warning (1.52 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+
+mysql> DESCRIBE Teachers;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| teacher_id | int(10)      | NO   | PRI | NULL    |       |
+| name       | varchar(150) | NO   |     | NULL    |       |
+| subject    | varchar(50)  | NO   |     | NULL    |       |
+| salary     | int(10)      | NO   |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * FROM Teachers;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO Teachers Values(1,'Sushmita Pathak','Science',10000);
+Query OK, 1 row affected (0.25 sec)
+
+mysql> INSERT INTO Teachers Values(2,'Neha Mandge','History',10000);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO Teachers Values(2,'Surekha','Hindi',10000);
+ERROR 1062 (23000): Duplicate entry '2' for key 'PRIMARY'
+mysql> INSERT INTO Teachers Values(3,'Surekha','Hindi',10000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO Teachers Values(4,'Dinesh Shaha','English',15000);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> INSERT INTO Teachers Values(5,'Simar Seth','Maths',20000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> SELECT * FROM Teachers;
++------------+-----------------+---------+--------+
+| teacher_id | name            | subject | salary |
++------------+-----------------+---------+--------+
+|          1 | Sushmita Pathak | Science |  10000 |
+|          2 | Neha Mandge     | History |  10000 |
+|          3 | Surekha         | Hindi   |  10000 |
+|          4 | Dinesh Shaha    | English |  15000 |
+|          5 | Simar Seth      | Maths   |  20000 |
++------------+-----------------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO Teachers Values(6,'Neha corea','Computer Science',200000);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> UPDATE Teachers SET salary=100000 WHERE teacher_id=6;
+Query OK, 1 row affected (1.63 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Teachers;
++------------+-----------------+------------------+--------+
+| teacher_id | name            | subject          | salary |
++------------+-----------------+------------------+--------+
+|          1 | Sushmita Pathak | Science          |  10000 |
+|          2 | Neha Mandge     | History          |  10000 |
+|          3 | Surekha         | Hindi            |  10000 |
+|          4 | Dinesh Shaha    | English          |  15000 |
+|          5 | Simar Seth      | Maths            |  20000 |
+|          6 | Neha corea      | Computer Science | 100000 |
++------------+-----------------+------------------+--------+
+6 rows in set (0.00 sec)
+
+
+mysql> DELETE FROM Teachers WHERE subject='Computer Science';
+Query OK, 1 row affected (1.17 sec)
+
+mysql> SELECT * FROM Teachers;
++------------+-----------------+---------+--------+
+| teacher_id | name            | subject | salary |
++------------+-----------------+---------+--------+
+|          1 | Sushmita Pathak | Science |  10000 |
+|          2 | Neha Mandge     | History |  10000 |
+|          3 | Surekha         | Hindi   |  10000 |
+|          4 | Dinesh Shaha    | English |  15000 |
+|          5 | Simar Seth      | Maths   |  20000 |
++------------+-----------------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT name,salary FROM Teachers WHERE teacher_id > 1 AND SALARY>12000;
++--------------+--------+
+| name         | salary |
++--------------+--------+
+| Dinesh Shaha |  15000 |
+| Simar Seth   |  20000 |
++--------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT name,salary FROM Teachers WHERE teacher_id > 1 OR SALARY>12000;
++--------------+--------+
+| name         | salary |
++--------------+--------+
+| Neha Mandge  |  10000 |
+| Surekha      |  10000 |
+| Dinesh Shaha |  15000 |
+| Simar Seth   |  20000 |
++--------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT name,subject FROM Teachers WHERE salary=10000;
++-----------------+---------+
+| name            | subject |
++-----------------+---------+
+| Sushmita Pathak | Science |
+| Neha Mandge     | History |
+| Surekha         | Hindi   |
++-----------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT name,subject,salary FROM Teachers ORDER BY salary DESC;
++-----------------+---------+--------+
+| name            | subject | salary |
++-----------------+---------+--------+
+| Simar Seth      | Maths   |  20000 |
+| Dinesh Shaha    | English |  15000 |
+| Sushmita Pathak | Science |  10000 |
+| Neha Mandge     | History |  10000 |
+| Surekha         | Hindi   |  10000 |
++-----------------+---------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> SELECT name,subject,salary FROM Teachers ORDER BY name;
++-----------------+---------+--------+
+| name            | subject | salary |
++-----------------+---------+--------+
+| Dinesh Shaha    | English |  15000 |
+| Neha Mandge     | History |  10000 |
+| Simar Seth      | Maths   |  20000 |
+| Surekha         | Hindi   |  10000 |
+| Sushmita Pathak | Science |  10000 |
++-----------------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO Teachers Values(8,'Rajesh Shaha','English',25000);
+Query OK, 1 row affected (2.65 sec)
+
+
+mysql> SELECT subject,COUNT(*) FROM Teachers  GROUP BY subject;
++---------+----------+
+| subject | COUNT(*) |
++---------+----------+
+| Science |        1 |
+| History |        1 |
+| Hindi   |        1 |
+| English |        2 |
+| Maths   |        1 |
++---------+----------+
+5 rows in set (0.00 sec)
+
+
+mysql> SELECT salary,COUNT(*) FROM Teachers  GROUP BY salary;
++--------+----------+
+| salary | COUNT(*) |
++--------+----------+
+|  10000 |        3 |
+|  15000 |        1 |
+|  20000 |        1 |
+|  25000 |        1 |
++--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT subject,SUM(salary) AS total_subject_salary FROM Teachers  GROUP BY subject;
++---------+----------------------+
+| subject | total_subject_salary |
++---------+----------------------+
+| Science |                10000 |
+| History |                10000 |
+| Hindi   |                10000 |
+| English |                40000 |
+| Maths   |                20000 |
++---------+----------------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Temp 
+    -> (id int(10));
+Query OK, 0 rows affected, 1 warning (0.49 sec)
+
+
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_College |
++-------------------+
+| Teachers          |
+| Temp              |
++-------------------+
+2 rows in set (0.01 sec)
+
+mysql> DROP TABLE Temp;
+Query OK, 0 rows affected (0.38 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_College |
++-------------------+
+| Teachers          |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE Students 
+    -> (student_id int(10) PRIMARY KEY,
+    -> name varchar(100) NOT NULL,
+    -> subject varchar(50) NOT NULL);
+Query OK, 0 rows affected, 1 warning (1.66 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_College |
++-------------------+
+| Students          |
+| Teachers          |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Students ADD COLUMN teacher int(10);
+Query OK, 0 rows affected, 1 warning (5.82 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> DESCRIBE Students;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| student_id | int(10)      | NO   | PRI | NULL    |       |
+| name       | varchar(100) | NO   |     | NULL    |       |
+| subject    | varchar(50)  | NO   |     | NULL    |       |
+| teacher    | int(10)      | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Students VALUES(101,'Dhanashri Shinde','Science',1);
+Query OK, 1 row affected (1.70 sec)
+
+mysql> INSERT INTO Students VALUES(102,'Tejashri Gangurde','English',4);
+Query OK, 1 row affected (0.36 sec)
+
+
+mysql> INSERT INTO Students VALUES(103,'Shweta Shahane','Hindi',NULL);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO Students VALUES(104,'Apoorva Pingale','Maths',5);
+Query OK, 1 row affected (0.19 sec)
+
+mysql> SELECT * FROM Students;
++------------+-------------------+---------+---------+
+| student_id | name              | subject | teacher |
++------------+-------------------+---------+---------+
+|        101 | Dhanashri Shinde  | Science |       1 |
+|        102 | Tejashri Gangurde | English |       4 |
+|        103 | Shweta Shahane    | Hindi   |    NULL |
+|        104 | Apoorva Pingale   | Maths   |       5 |
++------------+-------------------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE Students SET teacher=3 WHERE student_id=103;
+Query OK, 1 row affected (1.76 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Students;
++------------+-------------------+---------+---------+
+| student_id | name              | subject | teacher |
++------------+-------------------+---------+---------+
+|        101 | Dhanashri Shinde  | Science |       1 |
+|        102 | Tejashri Gangurde | English |       4 |
+|        103 | Shweta Shahane    | Hindi   |       3 |
+|        104 | Apoorva Pingale   | Maths   |       5 |
++------------+-------------------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Teachers 
+    -> INNER JOIN Students
+    -> ON Teachers.teacher_id=Students.teacher;
++------------+-----------------+---------+--------+------------+-------------------+---------+---------+
+| teacher_id | name            | subject | salary | student_id | name              | subject | teacher |
++------------+-----------------+---------+--------+------------+-------------------+---------+---------+
+|          1 | Sushmita Pathak | Science |  10000 |        101 | Dhanashri Shinde  | Science |       1 |
+|          4 | Dinesh Shaha    | English |  15000 |        102 | Tejashri Gangurde | English |       4 |
+|          3 | Surekha         | Hindi   |  10000 |        103 | Shweta Shahane    | Hindi   |       3 |
+|          5 | Simar Seth      | Maths   |  20000 |        104 | Apoorva Pingale   | Maths   |       5 |
++------------+-----------------+---------+--------+------------+-------------------+---------+---------+
+4 rows in set (0.00 sec)
+
+
+mysql> SELECT Teachers.teacher_id,Teachers.name,Teachers.subject,Students.name FROM Teachers  INNER JOIN Students ON Teachers.teacher_id=Students.teacher;
++------------+-----------------+---------+-------------------+
+| teacher_id | name            | subject | name              |
++------------+-----------------+---------+-------------------+
+|          1 | Sushmita Pathak | Science | Dhanashri Shinde  |
+|          4 | Dinesh Shaha    | English | Tejashri Gangurde |
+|          3 | Surekha         | Hindi   | Shweta Shahane    |
+|          5 | Simar Seth      | Maths   | Apoorva Pingale   |
++------------+-----------------+---------+-------------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT Teachers.teacher_id,Teachers.name,Teachers.subject,Students.name FROM Teachers  LEFT JOIN Students ON Teachers.teacher_id=Students.teacher;
++------------+-----------------+---------+-------------------+
+| teacher_id | name            | subject | name              |
++------------+-----------------+---------+-------------------+
+|          1 | Sushmita Pathak | Science | Dhanashri Shinde  |
+|          4 | Dinesh Shaha    | English | Tejashri Gangurde |
+|          3 | Surekha         | Hindi   | Shweta Shahane    |
+|          5 | Simar Seth      | Maths   | Apoorva Pingale   |
+|          2 | Neha Mandge     | History | NULL              |
+|          8 | Rajesh Shaha    | English | NULL              |
++------------+-----------------+---------+-------------------+
+6 rows in set (0.00 sec)
+
+
+mysql> SELECT Teachers.teacher_id,Teachers.name,Teachers.subject,Students.name FROM Teachers RIGHT JOIN Students ON Teachers.teacher_id=Students.teacher;
++------------+-----------------+---------+-------------------+
+| teacher_id | name            | subject | name              |
++------------+-----------------+---------+-------------------+
+|          1 | Sushmita Pathak | Science | Dhanashri Shinde  |
+|          4 | Dinesh Shaha    | English | Tejashri Gangurde |
+|          3 | Surekha         | Hindi   | Shweta Shahane    |
+|          5 | Simar Seth      | Maths   | Apoorva Pingale   |
++------------+-----------------+---------+-------------------+
+4 rows in set (0.00 sec)
+
+
+mysql> SELECT Teachers.teacher_id,Teachers.name,Teachers.subject,Students.name FROM Teachers CROSS JOIN Students;
++------------+-----------------+---------+-------------------+
+| teacher_id | name            | subject | name              |
++------------+-----------------+---------+-------------------+
+|          1 | Sushmita Pathak | Science | Apoorva Pingale   |
+|          1 | Sushmita Pathak | Science | Shweta Shahane    |
+|          1 | Sushmita Pathak | Science | Tejashri Gangurde |
+|          1 | Sushmita Pathak | Science | Dhanashri Shinde  |
+|          2 | Neha Mandge     | History | Apoorva Pingale   |
+|          2 | Neha Mandge     | History | Shweta Shahane    |
+|          2 | Neha Mandge     | History | Tejashri Gangurde |
+|          2 | Neha Mandge     | History | Dhanashri Shinde  |
+|          3 | Surekha         | Hindi   | Apoorva Pingale   |
+|          3 | Surekha         | Hindi   | Shweta Shahane    |
+|          3 | Surekha         | Hindi   | Tejashri Gangurde |
+|          3 | Surekha         | Hindi   | Dhanashri Shinde  |
+|          4 | Dinesh Shaha    | English | Apoorva Pingale   |
+|          4 | Dinesh Shaha    | English | Shweta Shahane    |
+|          4 | Dinesh Shaha    | English | Tejashri Gangurde |
+|          4 | Dinesh Shaha    | English | Dhanashri Shinde  |
+|          5 | Simar Seth      | Maths   | Apoorva Pingale   |
+|          5 | Simar Seth      | Maths   | Shweta Shahane    |
+|          5 | Simar Seth      | Maths   | Tejashri Gangurde |
+|          5 | Simar Seth      | Maths   | Dhanashri Shinde  |
+|          8 | Rajesh Shaha    | English | Apoorva Pingale   |
+|          8 | Rajesh Shaha    | English | Shweta Shahane    |
+|          8 | Rajesh Shaha    | English | Tejashri Gangurde |
+|          8 | Rajesh Shaha    | English | Dhanashri Shinde  |
++------------+-----------------+---------+-------------------+
+24 rows in set (0.00 sec)
+
+
+mysql> CREATE INDEX t_index ON Teachers (teacher_id);
+Query OK, 0 rows affected (0.52 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW INDEXES FROM Teachers;
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Teachers |          0 | PRIMARY  |            1 | teacher_id  | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| Teachers |          1 | t_index  |            1 | teacher_id  | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (1.70 sec)
+
+
+mysql> mysql> DROP INDEX t_index ON T;
+Query OK, 0 rows affected (1.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW INDEXES FROM Teachers;
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Teachers |          0 | PRIMARY  |            1 | teacher_id  | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT * FROM Teachers WHERE subject='English';
++------------+--------------+---------+--------+
+| teacher_id | name         | subject | salary |
++------------+--------------+---------+--------+
+|          4 | Dinesh Shaha | English |  15000 |
+|          8 | Rajesh Shaha | English |  25000 |
++------------+--------------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> EXPLAIN SELECT * FROM Teachers WHERE subject='English';
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | Teachers | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    6 |    16.67 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.00 sec)
+
+
+mysql> CREATE INDEX Tindex ON Teachers (subject);
+Query OK, 0 rows affected (1.89 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW INDEXES FROM Teachers;
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Teachers |          0 | PRIMARY  |            1 | teacher_id  | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| Teachers |          1 | Tindex   |            1 | subject     | A         |           5 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.04 sec)
+
+mysql> EXPLAIN SELECT * FROM Teachers WHERE subject='English';
++----+-------------+----------+------------+------+---------------+--------+---------+-------+------+----------+-------+
+| id | select_type | table    | partitions | type | possible_keys | key    | key_len | ref   | rows | filtered | Extra |
++----+-------------+----------+------------+------+---------------+--------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | Teachers | NULL       | ref  | Tindex        | Tindex | 202     | const |    2 |   100.00 | NULL  |
++----+-------------+----------+------------+------+---------------+--------+---------+-------+------+----------+-------+
+1 row in set, 1 warning (0.01 sec)
+s
+
+mysql> CREATE INDEX T_index ON Teachers (teacher_id);
+Query OK, 0 rows affected (0.62 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW INDEXES FROM Teachers;
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Teachers |          0 | PRIMARY  |            1 | teacher_id  | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| Teachers |          1 | Tindex   |            1 | subject     | A         |           5 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| Teachers |          1 | T_index  |            1 | teacher_id  | A         |           6 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.30 sec)
+
+
+mysql> EXPLAIN SELECT * FROM Teachers WHERE teacher_id=5;;
++----+-------------+----------+------------+-------+-----------------+---------+---------+-------+------+----------+-------+
+| id | select_type | table    | partitions | type  | possible_keys   | key     | key_len | ref   | rows | filtered | Extra |
++----+-------------+----------+------------+-------+-----------------+---------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | Teachers | NULL       | const | PRIMARY,T_index | PRIMARY | 4       | const |    1 |   100.00 | NULL  |
++----+-------------+----------+------------+-------+-----------------+---------+---------+-------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+
