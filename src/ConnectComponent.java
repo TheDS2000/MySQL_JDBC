@@ -14,7 +14,7 @@ public class ConnectComponent {
 	Scanner sc=new Scanner(System.in);
 	public boolean tryConnection() throws Exception{	
 
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/College?user=root&password=Ashonenata@2000&serverTimezone=UTC")){
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/College?user=****&password=*****&serverTimezone=UTC")){
 				
 			return conn.isValid(2);
     				   
@@ -24,7 +24,7 @@ public class ConnectComponent {
 	public void printTeachers() throws Exception {
 
 		Connection connection = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/College?user=root&password=Ashonenata@2000&serverTimezone=UTC");
+				"jdbc:mysql://localhost:3306/College?user=****&password=****&serverTimezone=UTC");
 		Statement statement = connection.createStatement();
 		ResultSet resultSet = 
 		statement.executeQuery("SELECT * FROM Teachers");	
@@ -46,7 +46,7 @@ public class ConnectComponent {
 	public void insertTeachers() throws SQLException
 	{
 		Connection connection = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/College?user=root&password=Ashonenata@2000&serverTimezone=UTC");
+				"jdbc:mysql://localhost:3306/College?user=****&password=****&serverTimezone=UTC");
 		Statement statement = connection.createStatement();
 		
 		System.out.println("Enter values to insert : ");
@@ -86,7 +86,7 @@ public class ConnectComponent {
 	public void updateTeachers() throws SQLException
 	{
 		Connection connection = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/College?user=root&password=Ashonenata@2000&serverTimezone=UTC");
+				"jdbc:mysql://localhost:3306/College?user=****&password=****&serverTimezone=UTC");
 		Statement statement = connection.createStatement();
 		
 		System.out.println("Enter id to update : ");
@@ -126,7 +126,7 @@ public class ConnectComponent {
 	public void deleteTeachers() throws SQLException
 	{
 		Connection connection = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/College?user=root&password=Ashonenata@2000&serverTimezone=UTC");
+				"jdbc:mysql://localhost:3306/College?user=****&password=****&serverTimezone=UTC");
 		Statement statement = connection.createStatement();
 		
 		System.out.println("Enter id to delete : ");
